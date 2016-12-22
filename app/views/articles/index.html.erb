@@ -3,7 +3,15 @@
 <ul id="articles">
 	<% @articles.each do |article| %>
 		<li>
-			<%= article.title %>
+			<%= link_to article.title, article_path(article) %>
+			<% if (article.body != nil)%>
+				<%= article.title %>
+			<% else %>
+				<span>"Vazio"</span> 
+			<% end %>	
 		</li>
 	<% end %>
-</ul>	
+</ul>
+<%= link_to "Create new article", new_article_path, class: "new_article"  %>
+
+	
