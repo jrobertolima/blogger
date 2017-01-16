@@ -5,5 +5,6 @@ Rails.application.routes.draw do
 		resources :comments
 	end
 	resources :tags
-	
+#adding Author resources
+		resources :authors	
 end
