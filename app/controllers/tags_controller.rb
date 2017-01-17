@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-
+before_filter :require_login, only: [:destroy] 
 	def index
 		@tags = Tag.all
 	end
@@ -16,5 +16,13 @@ class TagsController < ApplicationController
 
 		redirect_to tags_path 	
 	
+	end
+	
+	def require_login
+		unless logged_in?
+			flash.notice = "Must be logged!"
+			redirect_to tags_path
+			return false
+		end
 	end
 end

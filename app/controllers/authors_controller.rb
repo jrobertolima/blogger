@@ -1,6 +1,10 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: [:show, :edit, :update, :destroy]
 
+  # adding one more security layer.
+  before_filter :zero_authors_or_authenticated, only: [:new, :create] 
+  before_filter :require_login, except: [:new, :create]
+
   # GET /authors
   # GET /authors.json
   def index
@@ -12,6 +16,20 @@ class AuthorsController < ApplicationController
   def show
   end
 
+# adding one more security layer.
+  def zero_authors_or_authenticated
+	unless Author.count == 0 || current_user
+		redirect_to root_path
+		return false
+	end	
+  end
+
+  def require_login
+	if !logged_in?
+		redirect_to root_path
+		return false
+	end
+  end
   # GET /authors/new
   def new
     @author = Author.new
