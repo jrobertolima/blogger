@@ -5,6 +5,11 @@ Rails.application.routes.draw do
 		resources :comments
 	end
 	resources :tags
-#adding Author resources
-		resources :authors	
+#adding Author resources for Sorcery
+	resources :authors	
+	resources :author_sessions, only: [ :new, :create, :destroy]
+
+	get 'login'  => 'author_sessions#new'
+	get 'logout' => 'author_sessions#destroy'
+
 end
