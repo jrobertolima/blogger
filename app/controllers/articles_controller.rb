@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
 #  include ArticlesHelper #it could be in a private method
-before_filter :require_login
+before_filter :require_login, only: [:new, :create, :edit, :update, :destroy]
+
 	def index
 		@articles = Article.all
 	end
@@ -47,13 +48,15 @@ before_filter :require_login
 	end
 	
 	private 
-		def article_params
+	def article_params
 			params.require(:article).permit(:title, :body, :tag_list, :image)
 	end	
 
 	def require_login
 		if !logged_in?
 			flash.notice =  "Must be logged!"
+			redirect_to articles_path
+			return false
 		end	
 	end
 	
